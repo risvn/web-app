@@ -1,0 +1,142 @@
+/* Base */
+
+
+body {
+  background: #fdfdfd;
+  color: #222;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 2rem auto;
+  padding: 4rem 1rem 1rem; /* push content below navbar */
+  max-width: 900px;
+  line-height: 1.6;
+}
+
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: #111;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+/* Reset list */
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Navbar */
+.bg-steel {
+  background-color: #ffffff;
+  border-bottom: 1px solid #eaeaea;
+  padding: 0.75rem 1rem;
+}
+
+.site-header .navbar-nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.site-header .navbar-nav .nav-link {
+  color: #555;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #0070f3;
+}
+
+.site-header .navbar-nav .nav-link.active {
+  color: #000;
+  font-weight: 600;
+}
+
+/* Content sections */
+.content-section {
+  background: #fff;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+/* Article styles */
+.article-title {
+  color: #111;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+a.article-title {
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a.article-title:hover {
+  color: #0070f3;
+}
+
+.article-content {
+  white-space: pre-line;
+  font-size: 1rem;
+  color: #444;
+}
+
+.article-metadata {
+  font-size: 0.85rem;
+  color: #777;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.article-metadata a {
+  text-decoration: none;
+  color: #666;
+}
+
+.article-metadata a:hover {
+  color: #000;
+}
+
+/* Icons */
+.article-svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  fill: currentColor;
+  opacity: 0.8;
+}
+
+/* Images */
+.article-img, .account-img {
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.article-img {
+  height: 60px;
+  width: 60px;
+  margin-right: 1rem;
+}
+
+.account-img {
+  height: 100px;
+  width: 100px;
+  margin-right: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Account heading */
+.account-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #111;
+}
+
