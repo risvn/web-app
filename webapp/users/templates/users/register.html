@@ -17,12 +17,43 @@
       text-align: center;
       margin-bottom: 20px;
     }
+
+
+
+
+    .flash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.flash-box {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  text-align: center;
+  min-width: 250px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.flash-success { border-left: 5px solid #4CAF50; }
+.flash-error { border-left: 5px solid #F44336; }
+
+.hidden { display: none; }
   </style>
 </head>
 <body>
   <div class="login-box">
     <h2>Login</h2>
-    <form action="/register/" method="post">
+    <form id='registerForm'>
         {% csrf_token %}
       <label for="username">Username:</label><br>
       <input type="text" id="username" name="username" required><br><br>
@@ -30,10 +61,100 @@
       <label for="password">Password:</label><br>
       <input type="password" id="password" name="password" required><br><br>
 
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" name="email" required><br><br>
+
       <button type="submit">sign up</button>
     </form>
+
+
+
+      <div id="flash-overlay" class="flash-overlay hidden">
+            <div id="flash-message" class="flash-box"></div>
+     </div>
+
   </div>
 </body>
+
+
+<script>
+
+  function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + "=")) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+const csrftoken = getCookie("csrftoken");
+
+  const form = document.getElementById("registerForm");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault(); // prevent normal form submission (reload)
+
+    // Collect form data
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    // Send to Django backend
+    const res = await fetch("/register/", {
+      method: "POST",
+       headers: {
+    "Content-Type": "application/json",
+    "X-CSRFToken": csrftoken   // ✅ send token
+  },
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+if (result.success) {
+  window.location.href = result.redirect_url;  // ✅ redirect to home
+} else {
+  showFlash(result.message, "error");
+}
+
+
+    // Show message
+    showFlash(result.message, result.success ? "success" : "error");
+  });
+
+ 
+function showFlash(message, type="success") {
+  const overlay = document.getElementById("flash-overlay");
+  const msgBox = document.getElementById("flash-message");
+
+  msgBox.textContent = message;
+  msgBox.className = `flash-box flash-${type}`;
+  
+  overlay.classList.remove("hidden");
+
+  // auto hide after 2s
+  setTimeout(() => {
+    overlay.classList.add("hidden");
+  }, 2000);
+}
+
+
+
+
+
+
+
+</script>
+
+
+
+
 </html>
 
 
