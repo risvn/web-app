@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>register</title>
+  <title>Login Form</title>
   <style>
     body {
       display: flex;
@@ -13,47 +13,39 @@
       background: #f5f5f5;
     }
 
-    .box h2 {
+    .login-box h2 {
       text-align: center;
       margin-bottom: 20px;
     }
+  </style>
 
-
-
-
- </style>
 </head>
 <body>
-  <div class="box">
-    <h2>register</h2>
-    <form id='registerForm'>
-        {% csrf_token %}
+  <div class="login-box">
+    <h2>Login</h2>
+    <form id='login'>
       <label for="username">Username:</label><br>
       <input type="text" id="username" name="username" required><br><br>
 
       <label for="password">Password:</label><br>
       <input type="password" id="password" name="password" required><br><br>
 
-      <label for="email">Email:</label><br>
-      <input type="email" id="email" name="email" required><br><br>
+      <button type="submit">Login</button>
 
-      <button type="submit">sign up</button>
+      
+      <a href="{% url 'register' %}" class="text-muted small">
+        Don’t have an account? <u>Register here</u>
+      </a>
+
+
     </form>
-
-
-            <a href="{% url 'login' %}" class="text-muted small">
-            Already had an account! <u>login </u>
-             </a>
-
-
-
   </div>
 </body>
 
 
 <script>
 
-  function getCookie(name) {
+ function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
     const cookies = document.cookie.split(";");
@@ -70,39 +62,38 @@
 
 const csrftoken = getCookie("csrftoken");
 
-  const form = document.getElementById("registerForm");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault(); // prevent normal form submission (reload)
 
-    // Collect form data
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+const loginForm = document.getElementById("login");
 
-    // Send to Django backend
-    const res = await fetch("/register/", {
-      method: "POST",
+loginForm.addEventListener("submit",async(e)=>{
+e.preventDefault();
+
+const loginData=new FormData(loginForm);
+const data=Object.fromEntries(loginData.entries());
+
+const res = await fetch("/login/" ,{
+    method: "POST",
        headers: {
     "Content-Type": "application/json",
-    "X-CSRFToken": csrftoken   // ✅ send token
+    "X-CSRFToken": csrftoken   
   },
       body: JSON.stringify(data)
     });
 
-    const result = await res.json();
 
-if (result.success) {
-  window.location.href = result.redirect_url;  // ✅ redirect to home
-} else {
-alert(result.message); 
+const result =await res.json();
+
+if(result.success){
+window.location.href=result.redirect_url;
+    alert(result.message);
 }
-
-
-    // Show message
-  alert(result.message);
-  });
-
-}
+else  {
+        console.error(result.message);
+        alert(result.message);
+    }
+  }
+)
 
 </script>
 </html>

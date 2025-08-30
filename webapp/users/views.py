@@ -15,14 +15,14 @@ def register(request):
             password=data.get("password")
             email=data.get("email")
             
-              # ✅ Check if username already exists
+              #  Check if username already exists
             if User.objects.filter(username=username).exists():
                  return JsonResponse({"success": False, "message": "Username already exists"})
             #creating the user
             user = User.objects.create_user(username=username, email=email, password=password)
             user.save()
 
-            return JsonResponse({"success": True, "message": "User registered successfully!","redirect_url":"/blog/"})
+            return JsonResponse({"success": True, "message": "User registered successfully!","redirect_url":"/login/"})
 
         
        except Exception as e:
@@ -32,4 +32,13 @@ def register(request):
 
 
 
-
+def login(request):
+    if request.method=="POST":
+        data=json.loads(request.body)
+        username=data.get("username")
+        password=data.get("password")
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({"success": True, "message": "You login successfully!","redirect_url":"/blog/"})
+        else:
+            return JsonResponse({"success": False, "message": "Please enter the valid user and password"})
+    return render(request,'users/login.html')
