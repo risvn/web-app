@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Form</title>
+  <title>rsvn.Login</title>
   <style>
     body {
       display: flex;
@@ -17,7 +17,22 @@
       text-align: center;
       margin-bottom: 20px;
     }
+
+    .muted-link {
+  color:red;          /* muted gray */
+  text-decoration: none;   /* remove underline by default */
+  font-size: 0.9rem;       /* slightly smaller text */
+  transition: color 0.2s ease-in-out;
+}
+
+.muted-link:hover {
+  color:green;          /* darker gray on hover */
+  text-decoration: underline;
+}
+
+
   </style>
+
 
 </head>
 <body>
@@ -31,12 +46,13 @@
       <input type="password" id="password" name="password" required><br><br>
 
       <button type="submit">Login</button>
-
       
-      <a href="{% url 'register' %}" class="text-muted small">
-        Don’t have an account? <u>Register here</u>
-      </a>
-
+        <div>
+          <p> Dont have an account ? <a href="{% url 'register' %}" class="muted-link">
+                  Register 
+          </a>  
+          </p>
+        </div>
 
     </form>
   </div>

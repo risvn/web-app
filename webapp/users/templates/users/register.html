@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>register</title>
+  <title>rsvn.Register</title>
   <style>
     body {
       display: flex;
@@ -17,6 +17,19 @@
       text-align: center;
       margin-bottom: 20px;
     }
+  
+
+  .muted-link {
+  color: green;          /* muted gray */
+  text-decoration: none;   /* remove underline by default */
+  font-size: 0.9rem;       /* slightly smaller text */
+  transition: color 0.2s ease-in-out;
+}
+
+.muted-link:hover {
+  color: red;          /* darker gray on hover */
+  text-decoration: underline;
+}
 
 
 
@@ -25,9 +38,8 @@
 </head>
 <body>
   <div class="box">
-    <h2>register</h2>
+    <h2>Register</h2>
     <form id='registerForm'>
-        {% csrf_token %}
       <label for="username">Username:</label><br>
       <input type="text" id="username" name="username" required><br><br>
 
@@ -40,20 +52,19 @@
       <button type="submit">sign up</button>
     </form>
 
-
-            <a href="{% url 'login' %}" class="text-muted small">
-            Already had an account! <u>login </u>
-             </a>
-
-
-
+      <div>
+          <p> Already had an account ! <a href="{% url 'login' %}" class="muted-link">
+              Login    
+          </a>  
+          </p>
+        </div>
   </div>
 </body>
 
 
-<script>
 
-  function getCookie(name) {
+<script>
+function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
     const cookies = document.cookie.split(";");
@@ -70,41 +81,37 @@
 
 const csrftoken = getCookie("csrftoken");
 
-  const form = document.getElementById("registerForm");
+const form = document.getElementById("registerForm");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault(); // prevent normal form submission (reload)
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    // Collect form data
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+  // Collect form data
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
 
-    // Send to Django backend
-    const res = await fetch("/register/", {
-      method: "POST",
-       headers: {
-    "Content-Type": "application/json",
-    "X-CSRFToken": csrftoken   // ✅ send token
-  },
-      body: JSON.stringify(data)
-    });
-
-    const result = await res.json();
-
-if (result.success) {
-  window.location.href = result.redirect_url;  // ✅ redirect to home
-} else {
-alert(result.message); 
-}
-
-
-    // Show message
-  alert(result.message);
+  // Send to Django backend
+  const res = await fetch("/register/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken, 
+    },
+    body: JSON.stringify(data),
   });
 
-}
+  const result = await res.json();
 
+  if (result.success) {
+        alert(result.message);
+    window.location.href = result.redirect_url;
+  } else {
+    alert(result.message);
+  }
+});
 </script>
+
+
 </html>
 
 
