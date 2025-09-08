@@ -14,7 +14,6 @@
   return cookieValue;
 }
 
-const csrftoken = getCookie("csrftoken");
 
 
 
@@ -25,7 +24,7 @@ e.preventDefault();
 
 const loginData=new FormData(loginForm);
 const data=Object.fromEntries(loginData.entries());
-
+const csrftoken = getCookie("csrftoken");  
 const res = await fetch("/login/" ,{
     method: "POST",
        headers: {
