@@ -122,4 +122,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_REDIRECT_URL="blog-home"
+LOGIN_REDIRECT_URL="blog-home"   # after login redirect the url 
+LOGIN_URL='login'  #  changing the default route of the login url after using login_req decorator 

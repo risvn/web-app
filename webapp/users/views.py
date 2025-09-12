@@ -1,6 +1,7 @@
 import json
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -38,6 +39,8 @@ def login_view(request):
         data=json.loads(request.body)
         username=data.get("username")
         password=data.get("password")
+
+        #for authentication we are using django bulit in features
         user=authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
@@ -51,3 +54,14 @@ def login_view(request):
 def logout_view(request):
     logout(request)  # clears session + cookie
     return render(request,'users/logout.html')
+
+@login_required
+def profile(request):
+    return render(request,'users/profile.html')
+
+
+
+
+
+
+
