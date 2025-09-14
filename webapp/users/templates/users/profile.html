@@ -2,14 +2,151 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>rsvn.Login</title>
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <title>{{ request.user.username }} | Profile</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f0f2f5;
+    }
+
+    .profile-header {
+      background: linear-gradient(135deg, #0077b5, #00a0dc); /* LinkedIn blue */
+      height: 200px;
+      position: relative;
+    }
+
+    .profile-card {
+      max-width: 900px;
+      margin: -80px auto 40px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      position: relative;
+    }
+
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 5px solid #fff;
+      object-fit: cover;
+      position: absolute;
+      top: -75px;
+      left: 30px;
+      background: #eee;
+    }
+
+    .profile-info {
+      margin-left: 200px;
+      padding: 20px 0;
+    }
+
+    .profile-info h1 {
+      font-size: 24px;
+      margin: 0 0 5px;
+    }
+
+    .profile-info p {
+      margin: 4px 0;
+      color: #555;
+    }
+
+    .stats {
+      display: flex;
+      gap: 40px;
+      margin: 20px 0;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 18px;
+      color: #222;
+    }
+
+    .actions {
+      margin-top: 20px;
+    }
+
+    .actions a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-right: 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #0077b5;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #005a8c;
+    }
+
+    .btn-outline {
+      background: #fff;
+      border: 2px solid #0077b5;
+      color: #0077b5;
+    }
+
+    .btn-outline:hover {
+      background: #f0f7fc;
+    }
+  </style>
 </head>
 <body>
-<h1>{{ user.username }}<h1>
+
+  <!-- header / banner -->
+  <div class="profile-header"></div>
+
+  <!-- profile card -->
+  <div class="profile-card">
+    <!-- profile picture -->
+
+
+    <!-- user default is not loading check this out -->
+    <img src="{{ user.profile.image.url }}" 
+         alt="Profile picture" class="profile-pic">
+
+    <!-- user info -->
+    <div class="profile-info">
+      <h1>{{ user.username }}</h1>
+      <p>{{ user.email }}</p>
+      <p>Joined {{ user.date_joined|date:"F d, Y" }}</p>
+    </div>
+
+    <!-- stats like Instagram -->
+    <div class="stats">
+      <div class="stat">
+        <strong>xxx</strong>
+        Posts
+      </div>
+      <div class="stat">
+        <strong>xxs</strong>
+        Followers
+      </div>
+      <div class="stat">
+        <strong>xxx</strong>
+        Following
+      </div>
+    </div>
+
+    <!-- actions -->
+    <div class="actions">
+      <a href="{% url 'logout' %}" class="btn-primary">Logout</a>
+      <a href="#" class="btn-outline">Edit Profile</a>
+    </div>
+  </div>
+
 </body>
 </html>
-
 
