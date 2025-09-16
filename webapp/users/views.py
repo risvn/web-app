@@ -60,7 +60,27 @@ def profile(request):
     return render(request,'users/profile.html')
 
 
+@login_required
+def edit_profile(request):
+    if request.method=="POST":
+        try:
+            
+             data=json.loads(request.body)
+             print(data)
+             new_username=data.get("newUser")
+             new_email=data.get("newEmail")
 
+             user=request.user
+             if new_username:
+                user.username=new_username
+             if new_email:
+                user.email=new_email
+             user.save()
+
+             return JsonResponse({"success": True, "message": "changes made","redirect_url":"/profile/"})
+        except Exception as e :
+            return JsonResponse({"success":False,"message":f"Error:{str(e)}"})
+    return render(request,'users/edit.html')
 
 
 

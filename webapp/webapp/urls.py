@@ -27,10 +27,11 @@ urlpatterns = [
     path('register/', user_views.register,name='register'),
     path('login/',user_views.login_view,name='login'),
     path('profile/',user_views.profile,name='profile'),
+    path('edit-profile/',user_views.edit_profile,name='edit-profile'),
     path('logout/', user_views.logout_view,name='logout'),
 ]
 
 ## use this only in development server check out official doucmentation for the 
 ## deployment
 if settings.DEBUG:
-    urlpatterns+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
