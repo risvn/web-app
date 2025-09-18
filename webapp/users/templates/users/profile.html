@@ -1,107 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>{{ request.user.username }} | Profile</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #f0f2f5;
-    }
-
-    .profile-header {
-      background: linear-gradient(135deg, #0077b5, #00a0dc); /* LinkedIn blue */
-      height: 200px;
-      position: relative;
-    }
-
-    .profile-card {
-      max-width: 900px;
-      margin: -80px auto 40px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      padding: 20px;
-      position: relative;
-    }
-
-    .profile-pic {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: 5px solid #fff;
-      object-fit: cover;
-      position: absolute;
-      top: -75px;
-      left: 30px;
-      background: #eee;
-    }
-
-    .profile-info {
-      margin-left: 200px;
-      padding: 20px 0;
-    }
-
-    .profile-info h1 {
-      font-size: 24px;
-      margin: 0 0 5px;
-    }
-
-    .profile-info p {
-      margin: 4px 0;
-      color: #555;
-    }
-
-    .stats {
-      display: flex;
-      gap: 40px;
-      margin: 20px 0;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 18px;
-      color: #222;
-    }
-
-    .actions {
-      margin-top: 20px;
-    }
-
-    .actions a {
-      display: inline-block;
-      padding: 10px 20px;
-      margin-right: 10px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background 0.2s ease;
-    }
-
-    .btn-primary {
-      background: #0077b5;
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      background: #005a8c;
-    }
-
-    .btn-outline {
-      background: #fff;
-      border: 2px solid #0077b5;
-      color: #0077b5;
-    }
-
-    .btn-outline:hover {
-      background: #f0f7fc;
-    }
-  </style>
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 </head>
 <body>
 
@@ -110,42 +13,36 @@
 
   <!-- profile card -->
   <div class="profile-card">
-    <!-- profile picture -->
-
-
-    <!-- user default is not loading check this out -->
-    <img src="{{ user.profile.image.url}}" 
-         alt="Profile picture" class="profile-pic">
-
-    <!-- user info -->
+    <img src="{{ user.profile.image.url }}" alt="Profile picture" class="profile-pic">
     <div class="profile-info">
       <h1>{{ user.username }}</h1>
       <p>{{ user.email }}</p>
       <p>Joined {{ user.date_joined|date:"F d, Y" }}</p>
     </div>
 
-    <!-- stats like Instagram -->
-    <div class="stats">
-      <div class="stat">
-        <strong>xxx</strong>
-        Posts
-      </div>
-      <div class="stat">
-        <strong>xxs</strong>
-        Followers
-      </div>
-      <div class="stat">
-        <strong>xxx</strong>
-        Following
-      </div>
-    </div>
-
-    <!-- actions -->
     <div class="actions">
-        <a href="{% url 'edit-profile' %}" class="btn-outline">Edit </a>
-        <a href="{% url 'blog-home' %}" class="btn-outline"> Home</a>
+        <button id="openModal" class="btn-outline">Edit</button>
+        <a href="{% url 'blog-home' %}" class="btn-outline">Home</a>
     </div>
   </div>
+
+  <!-- Modal wrapper (must exist!) -->
+  <div id="editModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <span class="close" id="closeModal" aria-label="Close">&times;</span>
+      <h2>Edit Profile</h2>
+
+      <form id="edit-profile" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" id="username" name="newUser" placeholder="New Username">
+        <input type="email" id="new-email" name="newEmail" placeholder="New Email">
+        <input type="file" id="profile" name="profile" accept="image/*">
+        <button type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="{% static 'js/profile.js' %}?v=1.2"></script>
 
 </body>
 </html>

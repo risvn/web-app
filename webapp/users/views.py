@@ -82,7 +82,7 @@ def edit_profile(request):
              return JsonResponse({"success": True, "message": "changes made","redirect_url":"/profile/"})
         except Exception as e :
             return JsonResponse({"success":False,"message":f"Error:{str(e)}"})
-    return render(request,'users/edit.html')
+    return render(request,'users/profile.html')
 
 
 
