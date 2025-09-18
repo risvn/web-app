@@ -10,13 +10,18 @@
 <body>
   <div class="login-box">
     <h2>Edit Profile</h2>
-    <form id='edit-profile'>
+      <form id="edit-profile" enctype="multipart/form-data">
               {% csrf_token %}
       <label for="username">Username:</label><br>
-      <input type="text" id="username" name="newUser" required><br><br>
+      <input type="text" id="username" name="newUser" ><br><br>
 
       <label for="email">email:</label><br>
-      <input type="email" id="new-email" name="newEmail" required><br><br>
+      <input type="email" id="new-email" name="newEmail" ><br><br>
+
+        <label for="profile">select File:</label><br>
+      <input type="file" id="profile" name="profile" accept="images/*" ><br><br>
+
+
 
       <button type="submit">submit</button>
       

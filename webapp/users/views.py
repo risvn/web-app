@@ -64,17 +64,19 @@ def profile(request):
 def edit_profile(request):
     if request.method=="POST":
         try:
-            
-             data=json.loads(request.body)
-             print(data)
-             new_username=data.get("newUser")
-             new_email=data.get("newEmail")
 
+             profile_edited=request.FILES.get("profile")
+             username_edited=request.POST.get("newUser")
+             email_edited=request.POST.get("newEmail")
              user=request.user
-             if new_username:
-                user.username=new_username
-             if new_email:
-                user.email=new_email
+             if username_edited:
+                user.username=username_edited
+             if email_edited:
+                user.email=email_edited
+             if profile_edited:
+                user.profile.image = profile_edited
+                user.profile.save()
+
              user.save()
 
              return JsonResponse({"success": True, "message": "changes made","redirect_url":"/profile/"})
