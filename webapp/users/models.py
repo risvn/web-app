@@ -13,8 +13,8 @@ class Profile(models.Model):
         return f'{self.user.username} Profile'
 
     ## overrides the default save 
-    def save(self): 
-        super().save()
+    def save(self,*args,**kwargs): 
+        super().save(*args,**kwargs)
         img=Image.open(self.image.path)
 
         if img.width>300 or img.height>300:

@@ -102,6 +102,18 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    ".trycloudflare.com",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.trycloudflare.com"
+]
+
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -124,5 +136,6 @@ MEDIA_URL='/media/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_REDIRECT_URL="blog-home"   # after login redirect the url 
-LOGIN_URL='login'  #  changing the default route of the login url after using login_req decorator 
+LOGIN_REDIRECT_URL="blog-home"   # after login redirect the url
+LOGIN_URL='login'  #  changing the default route of the login url after using login_req decorator
+
