@@ -7,9 +7,9 @@
         <a class="mr-2" href="#">{{ object.author }}</a>
         <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
         {% if object.author == user %}
-          <div>
-            <a class="btn" href="{% url 'post-update' object.id %}">Update</a>
-            <a class="btn" href="{% url 'post-delete' object.id %}">Delete</a>
+          <div style="text-align:left;">
+            <a class="btn-outline-light btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+            <a class="btn-outline-light btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
           </div>
         {% endif %}
       </div>

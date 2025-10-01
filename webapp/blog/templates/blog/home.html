@@ -1,5 +1,7 @@
 {% extends "blog/base.html" %}
 {% block content %}
+  <div class="container" style="display:flex; flex-direction:row; ">
+      <div class="content">
     {% for post in posts %}
         <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
@@ -13,4 +15,17 @@
           </div>
         </article>
     {% endfor %}
+          <!-- TODO(rsvn):pass the context users from the views -->
+        <div class="sidebar">
+        <article class="media content-section">
+          <h3>Users</h3>
+              <ul>
+                {% for user in users %}
+                  <li>{{ user.username }}</li>
+                {% endfor %}
+              </ul>
+          </article>
+        </div>
+      </div>
+
 {% endblock content %}
