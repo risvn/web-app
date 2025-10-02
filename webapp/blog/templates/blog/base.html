@@ -12,11 +12,7 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'blog/minimal.css' %}">
 
-    {% if title %}
-        <title>Django Blog - {{ title }}</title>
-    {% else %}
         <title>Django Blog</title>
-    {% endif %}
 </head>
 <body>
     <header class="site-header">
@@ -49,7 +45,7 @@
     </header>
     <main role="main" class="container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="inner-row">
           {% block content %}{% endblock %}
         </div>
                </div>

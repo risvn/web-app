@@ -7,7 +7,6 @@ body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   margin: 2rem auto;
   padding: 4rem 1rem 1rem; /* push content below navbar */
-  max-width: 900px;
   line-height: 1.6;
 }
 
@@ -139,56 +138,37 @@ a.article-title:hover {
   font-weight: 600;
   color: #111;
 }
-    /* Parent container as flex */
-.container {
+
+
+/* Main layout container */
+.layout-container {
   display: flex;
-  gap: 20px;           /* space between left and right */
-  align-items: flex-start;
-  padding: 20px;
+  gap: 40px;              /* space between columns */
+  margin-top: 20px;
 }
 
-/* Left column: Blog posts */
-.content {
-  flex: 3;             /* takes 3 parts of available space */
+/* Friends (left column) */
+.trending-section{
+  flex: 2;                /* take 1 part of space */
+  max-width: 20%;         /* optional */
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
 }
 
-/* Blog post card styling */
-.post-card {
-  padding: 15px;
-  margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  background-color: #fff;
+/* Posts (middle column) */
+.posts-section {
+  flex: 3;                /* take 2 parts of space */
+  background: #fff;
+  padding: 10px;
 }
 
-/* Right column: Sidebar */
-.sidebar {
-  flex: 1;             /* takes 1 part of available space */
-  min-width: 200px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  background-color: #f8f8f8;
-}
-
-/* Optional: Friends list styling */
-.sidebar ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.sidebar ul li {
-  padding: 6px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-/* Responsive: Stack columns on small screens */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-  .sidebar {
-    min-width: auto;
-  }
+/* Trending (right column) */
+.friends-section{
+  flex: 2;                /* take 1 part of space */
+  max-width: 20%;
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
 }
 
