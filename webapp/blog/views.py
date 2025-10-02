@@ -35,12 +35,9 @@ def post_create(request):
         content=request.POST.get("content")
         author=request.user
 
-
         Post.objects.create(title=title, content=content,author=author)
 
         return redirect("blog-home")
-
-
     return render(request, "blog/post_create.html")
 
 
@@ -79,3 +76,7 @@ def post_delete(request,pk):
 class PostDetailView(DetailView):
     model=Post
  
+
+# TODO(rsvn):wrt the logic for popularity,views,comments,and top comments
+
+

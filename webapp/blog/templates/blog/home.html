@@ -2,11 +2,13 @@
 {% block content %}
 <div class="layout-container">
   <div class="friends-section">
-    <h3>Users</h3>
+    <h5>Users</h5>
     <ul>
       {% for user in users %}
+          <article class="box-section">
         <li>{{ user.username }}</li>
-      {% endfor %}
+          </article> 
+      {% endfor %} 
     </ul>
   </div>
 
@@ -26,12 +28,19 @@
     {% endfor %}
   </div>
 
+
+
+  <!-- TODO(rsvn):add logic to the trending posts based on popularity views -->
+  
+
   <div class="trending-section">
-    <h3>Trending</h3>
+    <h4>Trending</h4>
     <ul>
-      <li>Post 1</li>
-      <li>Post 2</li>
-      <li>Post 3</li>
+    {% for post in posts %}
+          <article class="box-section">
+             <li>{{ post.title }}</li>
+          </article> 
+    {% endfor %}
     </ul>
   </div>
 </div>
