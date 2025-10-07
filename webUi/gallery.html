@@ -1,0 +1,218 @@
+/* web-based media gallery layout writing from scratch in vanila JS
+form my media sharing web application, fetches media-data from my own api and display's  
+ favorites management, and lightbox viewing, allowing users to browse
+and interact with large collections of media efficiently.
+The gallery also supports metadata  showing captions or additional information for each media item.
+*/
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Local Gallery</title>
+<style>
+  :root{
+    --gap:12px;
+    --card-bg:#fff;
+    --muted:#666;
+    --accent:#0b84ff;
+    --bg:#0b0b0b;
+    --text:white;
+   --dark-charcoal: #111111;
+  --dark-jet: #1A1A1A;
+  --dark-raisin: #1E1E1E;
+  --dark-eerie: #1B1B1B;
+  --dark-onyx: #0F0F0F;
+  --dark-gunmetal: #121212;
+  --dark-outerspace: #2B2B2B;
+
+  --text-light: #eee; /* for contrast on dark backgrounds */ 
+  }
+  body{
+    margin:0;
+    font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:var(--bg);
+    color:var(--text);
+    padding:20px;
+  }
+
+
+
+.gallery{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
+
+  .container{
+    max-width:1280px;
+    margin:0 auto;
+  }
+
+
+
+
+  h1{ margin:0 0 16px; font-size:1.25rem; }
+  /* Responsive breakpoints */
+  @media (max-width:1200px){ .grid{ grid-template-columns: repeat(4, 1fr); } } /* 4 cols */
+  @media (max-width:900px){  .grid{ grid-template-columns: repeat(3, 1fr); } } /* 3 cols */
+  @media (max-width:600px){  .grid{ grid-template-columns: repeat(2, 1fr); } } /* 2 cols */
+  @media (max-width:420px){  .grid{ grid-template-columns: 1fr; } }              /* 1 col */
+
+  .media-card{
+    background:var(--card-bg);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 1px 3px rgba(0,0,0,0.06);
+    display:flex;
+    flex-direction:column;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+
+  .thumb-wrap{
+    width:100%;
+    aspect-ratio: 16/9;
+    background:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+
+  .thumb-wrap img, .thumb-wrap video{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+  }
+
+  .caption{
+    padding:9px 10px;
+    background:var(--dark-gunmetal);
+    font-size:0.88rem;
+    color:var(--text);
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+
+</style>
+</head>
+<body>
+
+
+
+  <div class="gallery",id="gallery">
+    </div>
+
+
+<script>
+
+//TODO(rsvn):write the string maninpulation function to get the path
+
+
+let fileMeta=[
+
+
+
+
+
+
+
+
+]
+
+
+/*  the json formate
+{
+
+   "name": "713032920129875968.mp4",
+    "substring": hello World! 
+    "published": "2024-11-16T19:30:07"
+  }
+*/
+
+
+let filePath = fileMeta.map(item => item.name);
+console.log(filePath)
+
+
+
+
+// getcatption:name,json meta data -> str
+function getcaption(filename, metaData) {
+  for (const post of metaData) {
+    if (post.name === filename) {
+      return post.substring || null
+    }
+  }
+  return null; 
+}
+
+
+
+
+
+//createCard:path,caption->html card
+function createCard(mediaPath,mediaCaption){
+
+const gallery=document.getElementsByClassName('gallery')[0]
+const mediaCard = document.createElement('div');
+mediaCard.className = 'card';
+const thumbWrap = document.createElement('div');
+thumbWrap.className = 'thumb-wrap';
+
+
+ if (/\.(mp4|webm|mov)$/i.test(mediaPath)) {
+    // For video
+    const video = document.createElement('video');
+    video.src = mediaPath;
+    video.controls = true;
+    video.className = 'thumb';
+    video.preload = 'metadata';
+    thumbWrap.appendChild(video);
+  } else {
+    // For image
+    const img = document.createElement('img');
+    img.src = mediaPath;
+    img.className = 'thumb';
+    img.loading = 'lazy';
+    thumbWrap.appendChild(img);
+  }
+
+const caption = document.createElement('div');
+caption.className = 'caption';
+const textPar = document.createElement('p');
+textPar.textContent = mediaCaption; 
+caption.appendChild(textPar);
+    
+
+mediaCard.appendChild(thumbWrap);
+mediaCard.appendChild(caption);
+gallery.appendChild(mediaCard);
+document.body.appendChild(gallery);
+
+//TODO(rsvn):ADD favourite,img,vid icon,thumbnail
+
+}
+
+
+filePath.forEach(fileName=>
+  {
+
+  let mediaCaption = getcaption(fileName,fileMeta)
+  let filePath=`downloads/${fileName}`
+  createCard(filePath,mediaCaption)
+
+  }
+  )
+
+
+
+</script>
+</body>
+</html>
+
